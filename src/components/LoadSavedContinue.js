@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Formik,
   Form,
@@ -24,10 +24,25 @@ const initialValues = {
   phNumbers: [""],
 };
 
+const savedValues = {
+  name: "farzad",
+  email: "farzad@gmail.com",
+  channel: "atlsmeta",
+  comments: "welcome",
+  address: "shiraz",
+  social: {
+    facebook: "",
+    twitter: "",
+  },
+  phoneNumbers: ["", ""],
+  phNumbers: [""],
+};
+
 const onSubmit = (values, onSubmitProps) => {
   console.log("form data", values);
   console.log("onSubmitProps", onSubmitProps);
   onSubmitProps.setSubmitting(false);
+  onSubmitProps.resetForm();
 };
 
 const userSchema = yup.object().shape({
@@ -44,13 +59,15 @@ const validateComments = (value) => {
   return error;
 };
 
-const YoutubeFormFormik = () => {
+const LoadSavedContinue = () => {
+  const [formValues, setFromValues] = useState(null);
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={formValues || initialValues}
       validationSchema={userSchema}
       onSubmit={onSubmit}
-      validateOnMount
+      enableReinitialize
+      //   validateOnMount
       // validateOnChange={false}
       // validateOnBlur={false}
     >
@@ -174,7 +191,7 @@ const YoutubeFormFormik = () => {
             <button type="button" onClick={() => formik.validateField()}>
               validate all
             </button>
-            <button
+            {/* <button
               type="button"
               onClick={() => formik.setFieldTouched("comments")}
             >
@@ -192,6 +209,9 @@ const YoutubeFormFormik = () => {
               }
             >
               visit fields
+            </button> */}
+            <button type="button" onClick={() => setFromValues(savedValues)}>
+              load saved values
             </button>
             <button
               type="submit"
@@ -199,6 +219,7 @@ const YoutubeFormFormik = () => {
             >
               submit
             </button>
+            <button type="reset">Reset form</button>
             {/* <button type="submit" disabled={!formik.dirty && !formik.isValid}>submit</button> */}
             {/* <button type="submit" disabled={!formik.dirty && !formik.isValid}>submit</button> */}
           </Form>
@@ -208,4 +229,4 @@ const YoutubeFormFormik = () => {
   );
 };
 
-export default YoutubeFormFormik;
+export default LoadSavedContinue;
