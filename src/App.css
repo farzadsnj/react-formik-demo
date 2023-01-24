@@ -4,6 +4,8 @@
   justify-content: center;
 }
 
+/* for use chakra remove label / input / textarea */
+
 label {
   font-weight: bold;
   display: flex;
